@@ -141,6 +141,25 @@ update:
       Name: Brand new story with attributes that I care about
       
       
+      
+      
+ ASSET OPS
+ 
+ #Apply Single Operation to All Stories within a Scope
+ 
+ from: Story
+where:
+  Story: Story:1234
+execute: Delete
+
+#Apply Multiple Operations to All Stories within a Scope
+
+from: Story
+where:
+  Scope: Scope:5655
+execute: QuickClose
+
+
 
   
   
