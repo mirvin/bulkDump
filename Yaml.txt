@@ -101,9 +101,46 @@ from: Epic:4622
         - ID='Story:1227'
 
 
+UPDATEING
+
+#Update Single Assets
+
+from: Epic:4622
+update:
+  Description: I am the coolest Epic man!
 
 
+#update multiple assets
 
+
+from: Epic
+where:
+  Scope.Name: Test Dump
+update:
+  Description: Queen of Epics!
+
+
+#Find and Replace
+from: Epic
+where:
+  Scope.Name: Test Dump
+update:
+  Description: Queen of Epics!
+
+
+#Find and Replace (alt)
+
+from: Epic
+where:
+  ID: Epic:1161
+update:
+  Subs:
+    Story:1781: remove
+    add:
+    - AssetType: Story
+      Name: Brand new story with attributes that I care about
+      
+      
 
   
   
