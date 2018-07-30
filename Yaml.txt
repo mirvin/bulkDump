@@ -160,6 +160,151 @@ where:
 execute: QuickClose
 
 
+Advanced Bulk operation
+
+
+#filters
+#deferred Execution
+
+In some cases users may need to get a list of assets that will effected by a bulk operation.  The bulk API allows for you to write the query and instead of executing the bulk operation, it creates the a graph of the executions.  The bulk engine reduces structure reduces the execution graph into a single list of the 
+
+#aliasing
+Aliasing will allow you to assign the output of a bulk operation to a reference.  One of the advantages of this feature is that it will allow users to make a reference to previously created assets in a later part of the payload.  For example,
+
+I want to create a brand new scope and use this scope but reference it later on in the payload.
+[{
+            "@myNewScope": {
+                "AssetType": "Scope",
+                "Parent": "Scope:0",
+                "Name": "test_org",
+                "BeginDate": "1/1/2017"
+            },
+            "@DudeStory": {
+                "AssetType": "Story",
+                "Name": "test_org",
+                "Scope" : "@myNewScope"
+            },
+}]
+
+
+
+Here is a more elaborate sample of how to use this aliasing
+
+[{
+            "@scope": {
+                "AssetType": "Scope",
+                "Parent": "Scope:0",
+                "Name": "test_org",
+                "BeginDate": "1/1/2017"
+            },
+            "@team": {
+                "AssetType": "Team",
+                "Name": "test_org",
+            },
+            "@teamRoom": {
+                "AssetType": "TeamRoom",
+                "Name": "test_org",
+                "IsKanban": true,
+                "Team": "@team",
+                "Scope": "@scope"
+            },
+            "@owner": {
+                "AssetType": "Member",
+                "Name": "John Doe",
+                "Nickname": "John",
+                "IsCollaborator": false,
+                "NotifyViaEmail": false,
+                "Password": "john",
+                "Username": "john@example.com",
+                "Email": "john@example.com",
+                "DefaultRole": "Role:2",
+                "Scopes": [
+                    "@scope"
+                ]
+            },
+            "@notstarted": {
+                "AssetType": "StoryStatus",
+                "Name": "Not Started",
+                "RollupState": "0",
+                "Team": "@team"
+            },
+            "@inprogress": {
+                "AssetType": "StoryStatus",
+                "Name": "In Progress",
+                "RollupState": "64",
+                "Team": "@team"
+            },
+            "@done": {
+                "AssetType": "StoryStatus",
+                "Name": "Done",
+                "RollupState": "64",
+                "Team": "@team"
+            },
+            "@readytodeploy": {
+                "AssetType": "StoryStatus",
+                "Name": "Read To Deploy",
+                "RollupState": "128",
+                "Team": "@team"
+            }
+        }]
+
+[{
+            "@scope": {
+                "AssetType": "Scope",
+                "Parent": "Scope:0",
+                "Name": "test_org",
+                "BeginDate": "1/1/2017"
+            },
+            "@team": {
+                "AssetType": "Team",
+                "Name": "test_org",
+            },
+            "@teamRoom": {
+                "AssetType": "TeamRoom",
+                "Name": "test_org",
+                "IsKanban": true,
+                "Team": "@team",
+                "Scope": "@scope"
+            },
+            "@owner": {
+                "AssetType": "Member",
+                "Name": "John Doe",
+                "Nickname": "John",
+                "IsCollaborator": false,
+                "NotifyViaEmail": false,
+                "Password": "john",
+                "Username": "john@example.com",
+                "Email": "john@example.com",
+                "DefaultRole": "Role:2",
+                "Scopes": [
+                    "@scope"
+                ]
+            },
+            "@notstarted": {
+                "AssetType": "StoryStatus",
+                "Name": "Not Started",
+                "RollupState": "0",
+                "Team": "@team"
+            },
+            "@inprogress": {
+                "AssetType": "StoryStatus",
+                "Name": "In Progress",
+                "RollupState": "64",
+                "Team": "@team"
+            },
+            "@done": {
+                "AssetType": "StoryStatus",
+                "Name": "Done",
+                "RollupState": "64",
+                "Team": "@team"
+            },
+            "@readytodeploy": {
+                "AssetType": "StoryStatus",
+                "Name": "Read To Deploy",
+                "RollupState": "128",
+                "Team": "@team"
+            }
+        }]
 
   
   
