@@ -164,9 +164,43 @@ Advanced Bulk operation
 
 
 #filters
-#deferred Execution
+#deferred Execution (Preview Only)
 
-In some cases users may need to get a list of assets that will effected by a bulk operation.  The bulk API allows for you to write the query and instead of executing the bulk operation, it creates the a graph of the executions.  The bulk engine reduces structure reduces the execution graph into a single list of the 
+In some cases users may need to get a list of assets that will effected by a bulk operation.  The bulk API allows for you to write the query and instead of executing the bulk operation, it creates the a graph of the executions.  The bulk engine reduces graph of the execution into single ordered list.  This list contains all of the operations and assets that will be affected by bulk operation.
+
+Posting to http://myV1Host/instance/api/Asset?previewOnly=true will get you a the full execution path
+For example, here is the output to this payload
+
+from: Story
+filter: 
+  Name='Happy'
+execute: QuickClose
+
+
+[
+  {
+    "@62d57651-a1d7-462a-bab4-69f292f5c791": {
+      "oid": "Story:5715",
+      "execute": "QuickClose"
+    }
+  },
+  {
+    "@debd1133-1c9b-4919-a260-a14f71028a66": {
+      "oid": "Story:5717",
+      "execute": "QuickClose"
+    }
+  },
+  {
+    "@088b99ef-ab5f-47a8-9dea-0b27c5c49965": {
+      "oid": "Story:5718",
+      "execute": "QuickClose"
+    }
+  }
+]
+
+This operation QuickCloses every story in the system with the name "Happy".  Notice the guid associated with each one of the Stories. The are independant which implies that they can be created in any order since there are no dependencies.  Here is an example the has dependencies between each of the reference objects.  This is similar to the concept aliasing found in this document.
+
+
 
 #aliasing
 Aliasing will allow you to assign the output of a bulk operation to a reference.  One of the advantages of this feature is that it will allow users to make a reference to previously created assets in a later part of the payload.  For example,
@@ -307,4 +341,4 @@ Here is a more elaborate sample of how to use this aliasing
         }]
 
   
-  
+  #integration with programming environments
